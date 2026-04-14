@@ -12,7 +12,7 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="w-64 border-r bg-muted/30 backdrop-blur">
+    <aside className="w-64 border-r bg-muted/50 backdrop-blur">
       <div className="p-6 text-xl font-semibold">JobFlow AI</div>
 
       <nav className="space-y-2 px-4">
