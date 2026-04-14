@@ -1,3 +1,5 @@
+"use client"
+
 import { StatsCard } from "@/src/components/shared/stats-cards";
 import { Briefcase, TrendingUp, MessageSquare } from "lucide-react";
 import { motion } from "framer-motion";

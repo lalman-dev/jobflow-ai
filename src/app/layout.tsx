@@ -1,3 +1,5 @@
+import "./globals.css";
+
 import { ThemeProvider } from "@/src/components/providers/theme-provider";
 
 export default function RootLayout({
