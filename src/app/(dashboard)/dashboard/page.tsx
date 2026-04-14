@@ -1,5 +1,6 @@
 import { StatsCard } from "@/src/components/shared/stats-cards";
 import { Briefcase, TrendingUp, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function DashboardPage() {
   const hasData = false;
@@ -13,7 +14,12 @@ export default function DashboardPage() {
         </p>
       </div>
       {/* Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="grid gap-4 md:grid-cols-3"
+      >
         <StatsCard
           title="Application"
           value="12"
@@ -32,7 +38,7 @@ export default function DashboardPage() {
           icon={MessageSquare}
           description="Keep going 💪🏻"
         />
-      </div>
+      </motion.div>
       {/* Main section */}
       {!hasData ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed p-12 text-center">
