@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { AddApplicationModal } from "@/src/features/applications/add-application-modal";
 import { ApplicationCard } from "@/src/features/applications/application-card";
-import { Plus } from "lucide-react";
 
 export default function ApplicationsPage() {
   const applications: any[] = []; // empty state first
@@ -17,11 +16,9 @@ export default function ApplicationsPage() {
             Track and manage your job applications
           </p>
         </div>
-
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add Application
-        </Button>
+        <div className="border rounded-xl">
+          <AddApplicationModal />
+        </div>
       </div>
 
       {/* Content */}
