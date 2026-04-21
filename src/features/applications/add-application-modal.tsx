@@ -22,25 +22,51 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useApplicationStore } from "@/store/useApplicationStore";
 
-export function AddApplicationModal() {
-  const addApplication = useApplicationStore((state) => state.addApplication);
+import { Application } from "@/src/types/application";
 
-  const [company, setCompany] = useState("");
-  const [role, setRole] = useState("");
+type Props = {
+  mode?: "create" | "edit";
+  initialData?: Application;
+  trigger?: React.ReactNode;
+};
+
+export function AddApplicationModal({
+  mode = "create",
+  initialData,
+  trigger,
+}: Props) {
+  const addApplication = useApplicationStore((state) => state.addApplication);
+  const updateApplication = useApplicationStore(
+    (state) => state.updateApplication,
+  );
+
+  const [company, setCompany] = useState(initialData?.company || "");
+
+  const [role, setRole] = useState(initialData?.role || "");
+
   const [status, setStatus] = useState<"applied" | "interview" | "rejected">(
-    "applied",
+    initialData?.status || "applied",
   );
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    addApplication({
-      id: crypto.randomUUID(),
-      company,
-      role,
-      status,
-      date: "Today",
-    });
+    if (mode === "edit") {
+      updateApplication({
+        ...initialData,
+        company,
+        role,
+        status,
+      });
+    } else {
+      addApplication({
+        id: crypto.randomUUID(),
+        company,
+        role,
+        status,
+        date: "Today",
+      });
+    }
 
     setCompany("");
     setRole("");
@@ -58,7 +84,9 @@ export function AddApplicationModal() {
 
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add Application</DialogTitle>
+          <DialogTitle>{mode==="edit"
+   ? "Edit Application"
+   : "Add Application"}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -68,7 +96,12 @@ export function AddApplicationModal() {
 
           <div>
             <Label>Status</Label>
-            <Select>
+            <Select
+              value={status}
+              onValueChange={(value) =>
+                setStatus(value as "applied" | "interview" | "rejected")
+              }
+            >
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />
               </SelectTrigger>
