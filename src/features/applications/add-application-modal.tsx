@@ -19,8 +19,33 @@ import {
   SelectValue,
 } from "@/src/components/ui/select";
 import { Plus } from "lucide-react";
+import { useState } from "react";
+import { useApplicationStore } from "@/store/useApplicationStore";
 
 export function AddApplicationModal() {
+  const addApplication = useApplicationStore((state) => state.addApplication);
+
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [status, setStatus] = useState<"applied" | "interview" | "rejected">(
+    "applied",
+  );
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    addApplication({
+      id: crypto.randomUUID(),
+      company,
+      role,
+      status,
+      date: "Today",
+    });
+
+    setCompany("");
+    setRole("");
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -36,16 +61,10 @@ export function AddApplicationModal() {
           <DialogTitle>Add Application</DialogTitle>
         </DialogHeader>
 
-        <form className="space-y-4">
-          <div>
-            <Label>Company</Label>
-            <Input placeholder="Google" />
-          </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input value={company} onChange={(e) => setCompany(e.target.value)} />
 
-          <div>
-            <Label>Role</Label>
-            <Input placeholder="Frontend Developer" />
-          </div>
+          <Input value={role} onChange={(e) => setRole(e.target.value)} />
 
           <div>
             <Label>Status</Label>
