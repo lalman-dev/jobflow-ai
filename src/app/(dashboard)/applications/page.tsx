@@ -2,9 +2,10 @@
 
 import { AddApplicationModal } from "@/src/features/applications/add-application-modal";
 import { ApplicationCard } from "@/src/features/applications/application-card";
+import { useApplicationStore } from "@/store/useApplicationStore";
 
 export default function ApplicationsPage() {
-  const applications: any[] = []; // empty state first
+  const applications = useApplicationStore((state) => state.applications);
 
   return (
     <div className="space-y-8">
