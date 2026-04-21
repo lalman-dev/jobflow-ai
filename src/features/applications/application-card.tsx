@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/src/components/ui/dropdown-menu";
+import { AddApplicationModal } from "./add-application-modal";
 
 export function ApplicationCard({ app }: any) {
   const deleteApplication = useApplicationStore(
@@ -45,7 +46,9 @@ export function ApplicationCard({ app }: any) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <AddApplicationModal mode="edit" initialData={app} />
+            </DropdownMenuItem>
 
             <DropdownMenuItem
               onClick={() => deleteApplication(app.id)}
