@@ -1,9 +1,21 @@
 import { Card, CardContent } from "@/src/components/ui/card";
-import { Badge} from "@/src/components/ui/badge"
+import { Badge } from "@/src/components/ui/badge";
 import { MoreHorizontal } from "lucide-react";
 import { Button } from "@/src/components/ui/button";
+import { useApplicationStore } from "@/store/useApplicationStore";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/src/components/ui/dropdown-menu";
 
 export function ApplicationCard({ app }: any) {
+  const deleteApplication = useApplicationStore(
+    (state) => state.deleteApplication,
+  );
+
   return (
     <Card className="rounded-2xl border border-border/50 bg-background/60 backdrop-blur hover:shadow-md transition">
       <CardContent className="p-5 flex items-center justify-between">
@@ -24,6 +36,25 @@ export function ApplicationCard({ app }: any) {
         <Button variant="ghost" size="icon">
           <MoreHorizontal className="h-4 w-4" />
         </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem>Edit</DropdownMenuItem>
+
+            <DropdownMenuItem
+              onClick={() => deleteApplication(app.id)}
+              className="text-red-500"
+            >
+              Delete
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardContent>
     </Card>
   );
